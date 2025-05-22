@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handlebars Random Projekt (Jedna datoteka)</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        #app {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .random-number {
+            font-size: 3em;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nasumični brojevi s Handlebarsom</h1>
+
+    <div id="app">
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const source = `
+                <p>Tvoj nasumični broj je:</p>
+                <div class="random-number">{{randomNumber}}</div>
+                <button id="generateNew">Generiraj novi broj</button>
+            `;
+
+                        const template = Handlebars.compile(source);
+
+            function generateRandomNumber() {
+                return Math.floor(Math.random() * 100) + 1; 
+            }
+
+            let data = {
+                randomNumber: generateRandomNumber()
+            };
+
+            const appDiv = document.getElementById('app');
+
+            function renderTemplate() {
+                appDiv.innerHTML = template(data);
+                
+                document.getElementById('generateNew').addEventListener('click', () => {
+                    data.randomNumber = generateRandomNumber();
+                    renderTemplate(); 
+                });
+            }
+
+            
+            renderTemplate();
+        });
+    </script>
+</body>
+</html>
